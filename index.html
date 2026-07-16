@@ -4,28 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CS2 Keys</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { 
-            background: #1a1a1a; 
-            color: white; 
-            text-align: center; 
-            font-family: sans-serif; 
-            padding-top: 50px; 
-        }
-        button { 
-            padding: 20px 40px; 
-            font-size: 24px; 
-            background: #ff4500; 
-            border: none; 
-            color: white; 
-            border-radius: 15px; 
-            cursor: pointer; 
-        }
+        body { background: #1a1a1a; color: white; text-align: center; font-family: sans-serif; padding-top: 50px; }
+        .box { padding: 20px; border: 2px solid #ff4500; display: inline-block; border-radius: 15px; }
+        button { padding: 15px 30px; font-size: 20px; background: #ff4500; border: none; color: white; border-radius: 10px; cursor: pointer; margin-top: 20px; }
     </style>
 </head>
 <body>
     <h1>CS2 Keys 🔑</h1>
-    <p>Balansingiz: 100 coin</p>
-    <button onclick="alert('Keys ochildi!')">Keys ochish</button>
+    <div class="box">
+        <p>ID: <span id="user-id">Aniqlanmoqda...</span></p>
+        <p>Balansingiz: <span id="balance">100</span> coin</p>
+    </div>
+    <br>
+    <button onclick="openCase()">Keys ochish (-10 coin)</button>
+
+    <script>
+        // Telegram Web App init
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        // User ID ni olish
+        document.getElementById('user-id').innerText = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : "Mehmon";
+
+        function openCase() {
+            let balanceSpan = document.getElementById('balance');
+            let balance = parseInt(balanceSpan.innerText);
+            
+            if (balance >= 10) {
+                balance -= 10;
+                balanceSpan.innerText = balance;
+                alert("Siz keys ochdingiz! Yutdingiz: " + Math.floor(Math.random() * 50) + " coin");
+            } else {
+                alert("Balans yetarli emas!");
+            }
+        }
+    </script>
 </body>
 </html>
+
